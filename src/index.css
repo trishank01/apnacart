@@ -16,6 +16,7 @@
 
   --color-primary: #007bff;
   --color-success: #28a745;
+  --color-danger: orangered;
 }
 
 * {
@@ -184,6 +185,7 @@ p {
 .--color-danger {
   color: orangered;
 }
+
 .--color-success {
   color: #28a745;
 }
