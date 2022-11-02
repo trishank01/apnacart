@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Header.module.scss";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { FaShoppingCart, FaTimes } from "react-icons/fa";
+import { FaShoppingCart, FaTimes, FaUserCircle } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
 
@@ -30,29 +30,46 @@ const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const [dispalyName, setDispalyName] = useState("");
 
- const Navigate = useNavigate()
-  
+  //Monitor currently sign in user
+  const Navigate = useNavigate();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+       // const uid = user.uid;
+        console.log('user' , user);
+        setDispalyName(user.displayName);
+        // ...
+      } else {
+        setDispalyName("");
+        // User is signed out
+        // ...
+      }
+    });
+  }, []);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
+
   const hideMenu = () => {
     setShowMenu(false);
   };
 
   const logoutUser = () => {
-    signOut(auth).then(() => {
-      // Sign-out successful.
-      toast.success("Logout successfully...")
-      Navigate("/")
-      
-    }).catch((error) => {
-      // An error happened.
-      toast.error(error.message)
-    });
-    
-  }
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        toast.success("Logout successfully...");
+        Navigate("/");
+      })
+      .catch((error) => {
+        // An error happened.
+        toast.error(error.message);
+      });
+  };
+
   return (
     <header>
       <div className={styles.header}>
@@ -97,6 +114,10 @@ const Header = () => {
               <NavLink to="login" className={activeLink}>
                 Login
               </NavLink>
+               <a href="# ">
+                <FaUserCircle size={16}/>
+                Hi , {dispalyName}
+               </a>
               <NavLink to="/register" className={activeLink}>
                 Register
               </NavLink>

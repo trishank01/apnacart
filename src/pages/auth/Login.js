@@ -37,18 +37,21 @@ const Login = () => {
         setIsLoading(false);
       });
   };
-  
-   //login with google
+
+  //login with google
   const provider = new GoogleAuthProvider();
   const signInGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
+        console.log("userSingIngoogle" , user)
+        toast.success("login successfully");
+        navigate("/")
         // ...
       })
       .catch((error) => {
         // Handle Errors here.
-        // ...
+        toast.error(error.message);
       });
   };
   return (
