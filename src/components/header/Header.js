@@ -6,6 +6,13 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import {
+  REMOVE_ACTIVE_USER,
+  SET_ACTIVE_USER,
+} from "../../redux/slice/authSlice";
+import { ShowOnLogin, ShowOnLogout } from "../hiddenLink/hiddenLink";
+import { AdminOnyLink } from "../adminOnyRoute/AdminOnyRoute";
 
 const logo = (
   <div className={styles.logo}>
@@ -30,24 +37,38 @@ const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const [dispalyName, setDispalyName] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const dispatch = useDispatch();
 
   //Monitor currently sign in user
   const Navigate = useNavigate();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-       // const uid = user.uid;
-        console.log('user' , user);
-        setDispalyName(user.displayName);
+        // const uid = user.uid;
+        if (user.displayName == null) {
+          const u1 = user.email.substring(0, user.email.indexOf("@"));
+          const uName = u1.charAt(0).toUpperCase() + u1.slice(1);
+          setDisplayName(uName);
+        } else {
+          setDisplayName(user.displayName);
+        }
+        dispatch(
+          SET_ACTIVE_USER({
+            email: user.email,
+            userName: user.displayName ? user.displayName : displayName,
+            userID: user.uid,
+          })
+        );
         // ...
       } else {
-        setDispalyName("");
+        setDisplayName("");
+        dispatch(REMOVE_ACTIVE_USER());
         // User is signed out
         // ...
       }
     });
-  }, []);
+  }, [dispatch, displayName]);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -99,6 +120,13 @@ const Header = () => {
               />
             </li>
             <li>
+              <AdminOnyLink>
+                <Link to="/admin/home">
+                  <button className="--btn --btn-primary">Admin</button>
+                </Link>
+              </AdminOnyLink>
+            </li>
+            <li>
               <NavLink to="/" end className={activeLink}>
                 Home
               </NavLink>
@@ -111,22 +139,33 @@ const Header = () => {
           </ul>
           <div className={styles["header-right"]} onClick={hideMenu}>
             <span className={styles.links}>
-              <NavLink to="login" className={activeLink}>
-                Login
-              </NavLink>
-               <a href="# ">
-                <FaUserCircle size={16}/>
-                Hi , {dispalyName}
-               </a>
-              <NavLink to="/register" className={activeLink}>
-                Register
-              </NavLink>
-              <NavLink to="/order-history" className={activeLink}>
-                My Orders
-              </NavLink>
-              <NavLink to="/" onClick={logoutUser}>
-                Logout
-              </NavLink>
+              <ShowOnLogout>
+                <NavLink to="login" className={activeLink}>
+                  Login
+                </NavLink>
+              </ShowOnLogout>
+
+              <ShowOnLogin>
+                <a href="#home" style={{ color: "#ff7722" }}>
+                  <FaUserCircle size={16} />
+                  Hi , {displayName}
+                </a>
+              </ShowOnLogin>
+              <ShowOnLogout>
+                <NavLink to="/register" className={activeLink}>
+                  Register
+                </NavLink>
+              </ShowOnLogout>
+              <ShowOnLogin>
+                <NavLink to="/order-history" className={activeLink}>
+                  My Orders
+                </NavLink>
+              </ShowOnLogin>
+              <ShowOnLogin>
+                <NavLink to="/" onClick={logoutUser}>
+                  Logout
+                </NavLink>
+              </ShowOnLogin>
             </span>
             {cart}
           </div>

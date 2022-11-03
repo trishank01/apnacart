@@ -1,13 +1,8 @@
 import React from 'react'
 
-
 const Home = () => {
   return (
-    <div>
-        {/* <Slider/> */}
-        <h1>Home pages</h1>
-    </div>
-
+    <div>Home</div>
   )
 }
 

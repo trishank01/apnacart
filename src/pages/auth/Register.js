@@ -10,6 +10,7 @@ import { auth } from "../../firebase/config";
 import Loader from "../../components/loader/Loader";
 import { toast } from "react-toastify";
 
+
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,11 +28,10 @@ const Register = () => {
     createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in 
-    const user = userCredential.user;
-   console.log(user)
+   // const user = userCredential.user;
    setIsLoading(false)
    toast.success("Registration successful...")
-   navigate("/login")
+   navigate("/login")  
     // ...
   })
   .catch((error) => {
