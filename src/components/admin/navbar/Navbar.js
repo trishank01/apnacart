@@ -10,7 +10,6 @@ const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
 const Navbar = () => {
   const username = useSelector(selectIsUserName);
-  console.log(username);
   return (
     <div className={styles.navbar}>
       <div className={styles.user}>
@@ -31,7 +30,7 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/admin/add-products" className={activeLink}>
+            <NavLink to="/admin/add-products/ADD" className={activeLink}>
               Add Products
             </NavLink>
           </li>

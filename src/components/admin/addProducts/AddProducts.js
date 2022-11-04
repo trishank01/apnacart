@@ -1,12 +1,16 @@
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { db, storage } from "../../../firebase/config";
 import Card from "../../card/Card";
 import styles from "./AddProducts.module.scss";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { collection, addDoc, Timestamp, setDoc, doc } from "firebase/firestore";
+import { useNavigate, useParams } from "react-router-dom";
 import Loader from "../../loader/Loader";
+import { useSelector } from "react-redux";
+import { selectProducts } from "../../../redux/slice/productSlice";
+
+
 
 
 const categories = [
@@ -26,13 +30,33 @@ const initialState = {
 }
 
 const AddProducts = () => {
-  const [product, setProduct] = useState({
-   ...initialState
+  const {id} = useParams()
+  const products = useSelector(selectProducts)
+  const productEdit = products.find((item) => item.id === id)
+  const [product, setProduct] = useState(() => {
+    const newState = detectForm(id ,
+      {...initialState}, 
+      productEdit
+      )
+      return newState
   });
 
+ 
+
+
   const [uploadProgress, setUploadProgress] = useState(0);
+  console.log(uploadProgress)
   const [isLoading, setIsLoading] = useState(false);
   const Navigate= useNavigate()
+
+  function detectForm(id , f1 ,f2) {
+      if(id === "ADD"){
+        return f1
+      }
+      else{
+        return f2
+      }
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -65,6 +89,34 @@ const AddProducts = () => {
       
     }
   };
+  
+  const editProduct = (e) => {
+    e.preventDefault();
+    setIsLoading(true)
+    if(product.imageURL !== productEdit.imageURL){
+      const storegeRef = ref(storage, productEdit.imageURL);
+       deleteObject(storegeRef);
+    }
+    try {
+       setDoc(doc(db, "products", id), {
+        name: product.name,
+        imageURL: product.imageURL,
+        price: +product.price,
+        category: product.category,
+        brand: product.brand,
+        desc: product.desc,
+        createdAt : productEdit.createdAt,
+        editedAt : Timestamp.now().toDate()    
+      });
+      setIsLoading(false)
+      toast.success("Product Edited Successfully..")
+      Navigate('/admin/all-products')
+    } catch (error) {
+      setIsLoading(false)
+      toast.error(error.message)
+    }
+  }
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
@@ -76,7 +128,7 @@ const AddProducts = () => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setUploadProgress(progress);
-        console.log("Upload is " + progress + "% done");
+      
       },
       (error) => {
         // Handle unsuccessful uploads
@@ -90,13 +142,14 @@ const AddProducts = () => {
       }
     );
   };
+  
   return (
     <>
     {isLoading && <Loader/>}
     <div className={styles.product}>
-      <h1>Add Product</h1>
+      {id === "ADD" ? <h2>Add new Product</h2> : <h2>Edit Product</h2>}
       <Card cardClass={styles.card}>
-        <form onSubmit={addProduct}>
+        <form onSubmit={detectForm(id , addProduct , editProduct)}>
           <label>Product name :</label>
           <input
             type="text"
@@ -130,7 +183,7 @@ const AddProducts = () => {
               name="image"
               onChange={(e) => handleImageChange(e)}
             />
-            {uploadProgress === 100 && (
+            {product.imageURL !== "" && (
               <input
                 type="text"
                 required
@@ -189,7 +242,7 @@ const AddProducts = () => {
             onChange={(e) => handleInputChange(e)}
           ></textarea>
           <button type="submit" className="--btn --btn-primary">
-            Save Product
+           {detectForm(id , "Add Product" , "Edit Product")}
           </button>
         </form>
       </Card>
