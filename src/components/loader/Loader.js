@@ -5,7 +5,7 @@ import LoaderImg from '../../assets/loader.gif'
 
 const Loader = () => {
   return ReactDOM.createPortal(
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} --center-all`} >
         <div className={styles.Loader}>
         <img src={LoaderImg} alt="Loading..."/>
         </div>

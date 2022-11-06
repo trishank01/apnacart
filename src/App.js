@@ -9,6 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from "./pages/cart/Cart";
 import AdminOnyRoute from "./components/adminOnyRoute/AdminOnyRoute";
+import ProductDetails from "./components/product/productDetails/ProductDetails";
 
 
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/reset" element={<Reset />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/product-details/:id" element={<ProductDetails />} />
           {/* Admin */}
     
           <Route path="/admin/*"
