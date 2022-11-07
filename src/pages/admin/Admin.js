@@ -1,10 +1,10 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import AddProducts from '../../components/admin/addProducts/AddProducts'
+import Home from '../../components/admin/home/Home'
 import Navbar from '../../components/admin/navbar/Navbar'
 import Orders from '../../components/admin/orders/Orders'
 import ViewProducts from '../../components/admin/viewProduct/ViewProducts'
-import Home from '../home/Home'
 import styles from './Admin.module.scss'
 
 const Admin = () => {
