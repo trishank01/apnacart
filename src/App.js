@@ -18,7 +18,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-      <ToastContainer/>
+      <ToastContainer autoClose={2500}/>
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />

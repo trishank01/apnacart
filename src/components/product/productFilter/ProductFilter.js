@@ -50,9 +50,6 @@ const ProductFilter = () => {
   } , [dispatch , products ,price])
 
   
-  console.log(price)
-  console.log(minPrice)
-  console.log(maxPrice)
 
 
   return (

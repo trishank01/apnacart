@@ -6,13 +6,17 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   REMOVE_ACTIVE_USER,
   SET_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
 import { ShowOnLogin, ShowOnLogout } from "../hiddenLink/hiddenLink";
 import { AdminOnyLink } from "../adminOnyRoute/AdminOnyRoute";
+import { CART_TOTAL_QUANTITY, seletctCartItems, seletctCartTotalQuantity } from "../../redux/slice/cartSlice";
+
+
+
 
 const logo = (
   <div className={styles.logo}>
@@ -24,21 +28,41 @@ const logo = (
   </div>
 );
 
-const cart = (
-  <span className={styles.cart}>
-    <Link to="/cart">
-      Cart <FaShoppingCart size={20} />
-      <p>0</p>
-    </Link>
-  </span>
-);
+
 
 const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [displayName, setDisplayName] = useState("");
+  const [scrollPage, setScrollPage] = useState(false)
   const dispatch = useDispatch();
+  const cartTotalQuantity = useSelector(seletctCartTotalQuantity);
+
+  const cart = (
+    <span className={styles.cart}>
+      <Link to="/cart">
+        Cart <FaShoppingCart size={20} />
+        <p>{cartTotalQuantity}</p>
+      </Link>
+    </span>
+  );
+
+  const FixNavbar = () => {
+    if(window.scrollY > 20){
+      setScrollPage(true)
+    }else {
+      setScrollPage(false)
+    }
+     
+  }
+
+  window.addEventListener("scroll" , FixNavbar)
+
+  useEffect(() => {
+    dispatch(CART_TOTAL_QUANTITY())
+  },[])
+
 
   //Monitor currently sign in user
   const Navigate = useNavigate();
@@ -92,7 +116,7 @@ const Header = () => {
   };
 
   return (
-    <header>
+    <header className={scrollPage ? `${styles.fixed}` : null}>
       <div className={styles.header}>
         {logo}
         <nav
