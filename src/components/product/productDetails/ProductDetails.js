@@ -66,7 +66,7 @@ const ProductDetails = () => {
           <img src={spinner} alt="Loading..." style={{ width: "50px" }} />
         ) : (
           <div className={styles.details}>
-            <div>
+            <div className={styles.img}>
               <img src={product.imageURL} alt={product.name} />
             </div>
             <div className={styles.content}>

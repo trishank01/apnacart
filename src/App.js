@@ -10,6 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Cart from "./pages/cart/Cart";
 import AdminOnyRoute from "./components/adminOnyRoute/AdminOnyRoute";
 import ProductDetails from "./components/product/productDetails/ProductDetails";
+import CheckoutDetails from "./pages/checkout/CheckoutDetails";
+import Checkout from "./pages/checkout/Checkout";
 
 
 
@@ -27,6 +29,11 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/reset" element={<Reset />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout-details" element={<CheckoutDetails />} />
+          <Route path="/checkout" element={<Checkout/>} />
+
+
+
           <Route path="/product-details/:id" element={<ProductDetails />} />
           {/* Admin */}
     

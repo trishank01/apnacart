@@ -5,6 +5,7 @@ const initialState = {
      cartItems : localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : [],
      cartTotalQantity : 0,
      cartTotalAmount : 0,
+     previousURL : ""
      
 }
 
@@ -89,14 +90,19 @@ const cartSlice = createSlice({
             return totalQuantity += item
         })
        state.cartTotalQantity = totalQuantity
+      },
+      SAVE_URL : (state , action) => {
+        state.previousURL = action.payload
+        console.log(action.payload)
       }
      }
 })
 
-export const {ADD_TO_CART , GET_TOTAL_QUANTITY , DECREASE_CART ,DELETE_ITEM , DELETE_ALL_ITEM ,CALCULATE_SUBTOTAL ,CART_TOTAL_QUANTITY} = cartSlice.actions
+export const {ADD_TO_CART , GET_TOTAL_QUANTITY , DECREASE_CART ,DELETE_ITEM , DELETE_ALL_ITEM ,CALCULATE_SUBTOTAL ,CART_TOTAL_QUANTITY ,  SAVE_URL} = cartSlice.actions
 
 export const seletctCartItems = (state) => state.cart.cartItems
 export const seletctCartTotalQuantity= (state) => state.cart.cartTotalQantity
 export const seletctCartTotalAmount= (state) => state.cart.cartTotalAmount
+export const seletctPReviousURL= (state) => state.cart.previousURL
 
 export default cartSlice.reducer

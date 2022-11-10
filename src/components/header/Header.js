@@ -48,16 +48,16 @@ const Header = () => {
     </span>
   );
 
-  const FixNavbar = () => {
-    if(window.scrollY > 20){
-      setScrollPage(true)
-    }else {
-      setScrollPage(false)
-    }
+  // const FixNavbar = () => {
+  //   if(window.scrollY > 5){
+  //     setScrollPage(true)
+  //   }else {
+  //     setScrollPage(false)
+  //   }
      
-  }
+  // }
 
-  window.addEventListener("scroll" , FixNavbar)
+  // window.addEventListener("scroll" , FixNavbar)
 
   useEffect(() => {
     dispatch(CART_TOTAL_QUANTITY())
@@ -114,9 +114,9 @@ const Header = () => {
         toast.error(error.message);
       });
   };
-
+//className={`${styles.fixed}`}
   return (
-    <header className={scrollPage ? `${styles.fixed}` : null}>
+    <header className={`${styles.fixed}`}>
       <div className={styles.header}>
         {logo}
         <nav

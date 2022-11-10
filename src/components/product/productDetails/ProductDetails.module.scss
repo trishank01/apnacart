@@ -12,6 +12,7 @@
   
       .img {
         width: 45%;
+        max-height: 500px;
         border: 1px solid #ccc;
         border-radius: 3px;
         img {
@@ -21,7 +22,7 @@
   
       .content {
         width: 55%;
-        padding: 0 5px;
+        padding: 0 55px;
         & > * {
           margin-bottom: 1rem;
         }
