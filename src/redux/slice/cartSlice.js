@@ -28,7 +28,6 @@ const cartSlice = createSlice({
           const tempProduct = {...action.payload , cartQuanity : 1}
           state.cartItems.push(tempProduct)
           toast.success(`${action.payload.name} added to cart` , {position : "top-left"})
-          console.log(tempProduct)
         }
         //save cart to LocalStorage
        localStorage.setItem("cartItems" , JSON.stringify(state.cartItems))

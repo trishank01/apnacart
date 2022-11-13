@@ -71,8 +71,8 @@ const ProductDetails = () => {
             </div>
             <div className={styles.content}>
               <h3>{product.name}</h3>
-              <p className={styles.price}>${product.price}</p>
-              <p>${product.desc}</p>
+              <p className={styles.price}>₹{product.price}</p>
+              <p>₹{product.desc}</p>
               <p>
                 <b>SKU</b> {product.id}
               </p>

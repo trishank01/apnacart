@@ -101,7 +101,7 @@ const Cart = () => {
                               alt={name}
                             />
                           </td>
-                          <td>{price}</td>
+                          <td>₹{price}</td>
                           <td>
                             <div className={styles.count}>
                               <button
@@ -121,7 +121,7 @@ const Cart = () => {
                               </button>
                             </div>
                           </td>
-                          <td>{(price * cartQuanity).toFixed(2)}</td>
+                          <td>₹{(price * cartQuanity).toFixed(2)}</td>
                           <td
                             className={styles.icons}
                             onClick={() => deleletCartItem(cart)}
@@ -145,7 +145,7 @@ const Cart = () => {
                       <p>Cart Item(s): <b>{` ${cartTotalQuantity}`}</b></p>
                       <div className={styles}>
                         <h4>Subtotal : </h4>
-                        <h3>{`$${cartTotalAmount.toFixed(2)}`}</h3>
+                        <h3>{`₹${cartTotalAmount.toFixed(2)}`}</h3>
                       </div>
                       <p>Tax an shipping calculated at checkout</p>
                       <button onClick={checkout} className="--btn --btn-primary">Checkout</button>
