@@ -12,12 +12,15 @@ import {
   DECREASE_CART,
   seletctCartItems,
 } from "../../../redux/slice/cartSlice";
+import useFetchDocument from "../../../customHook/useFetchDocument";
+
 
 const ProductDetails = () => {
   //const product = useSelector(selectProducts)
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const dispatch = useDispatch();
+  const {document} = useFetchDocument("products" , id)
 
   const cartItems = useSelector(seletctCartItems);
 
@@ -28,22 +31,24 @@ const ProductDetails = () => {
   });
 
   useEffect(() => {
-    getProduct();
-  }, []);
+      setProduct(document)
+  }, [document]);
 
-  const getProduct = async () => {
-    const docRef = doc(db, "products", id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      const obj = {
-        id: id,
-        ...docSnap.data(),
-      };
-      setProduct(obj);
-    } else {
-      toast.error("product not found");
-    }
-  };
+  //old one now converted to cumstom hook 
+
+  // const getProduct = async () => {
+  //   const docRef = doc(db, "products", id);
+  //   const docSnap = await getDoc(docRef);
+  //   if (docSnap.exists()) {
+  //     const obj = {
+  //       id: id,
+  //       ...docSnap.data(),
+  //     };
+  //     setProduct(obj);
+  //   } else {
+  //     toast.error("product not found");
+  //   }
+  // };
 
   const addTOcart = (product) => {
     dispatch(ADD_TO_CART(product));
