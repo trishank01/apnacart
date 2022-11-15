@@ -15,8 +15,6 @@ const cartSlice = createSlice({
     reducers : {
       ADD_TO_CART : (state , action) => {
        const productIndex = state.cartItems.findIndex((item) => item.id === action.payload.id)
-       
-   
         if(productIndex >= 0){
           // item already exists in the cart
           // just increase the cartQuanity

@@ -29,6 +29,7 @@ const ProductList = ({ products }) => {
  
   const currentProducts = filteredProducts.slice(indexOfFirstProduct , indexOfLastProduct)
 
+  console.log(currentProducts)
   const dispatch = useDispatch();
   
 
