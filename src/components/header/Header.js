@@ -13,7 +13,7 @@ import {
 } from "../../redux/slice/authSlice";
 import { ShowOnLogin, ShowOnLogout } from "../hiddenLink/hiddenLink";
 import { AdminOnyLink } from "../adminOnyRoute/AdminOnyRoute";
-import { CART_TOTAL_QUANTITY, seletctCartItems, seletctCartTotalQuantity } from "../../redux/slice/cartSlice";
+import { CART_TOTAL_QUANTITY, seletctCartTotalQuantity } from "../../redux/slice/cartSlice";
 
 
 
@@ -35,7 +35,7 @@ const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [displayName, setDisplayName] = useState("");
-  const [scrollPage, setScrollPage] = useState(false)
+  //const [scrollPage, setScrollPage] = useState(false)
   const dispatch = useDispatch();
   const cartTotalQuantity = useSelector(seletctCartTotalQuantity);
 
@@ -61,7 +61,7 @@ const Header = () => {
 
   useEffect(() => {
     dispatch(CART_TOTAL_QUANTITY())
-  },[])
+  },[dispatch])
 
 
   //Monitor currently sign in user

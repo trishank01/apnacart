@@ -14,8 +14,10 @@ import {
   selectProducts,
   STORE_PRODUCTS,
 } from "../../../redux/slice/productSlice";
+import Vchart from "../../vchart/Vchart";
 import InfoBox from "../../infoBox/InfoBox";
 import styles from "./Home.module.scss";
+
 
 
 //Icons
@@ -31,7 +33,6 @@ const Home = () => {
   const fireBaseData = useFetchCollection("products");
   const { data } = useFetchCollection("orders");
   const dispatch = useDispatch();
-  console.log(fireBaseData.data.length)
 
   useEffect(() => {
     dispatch(
@@ -67,6 +68,9 @@ const Home = () => {
           count={orders.length}
           icon={ordersIcon}
         />
+      </div>
+      <div>
+        <Vchart/>
       </div>
     </div>
   );

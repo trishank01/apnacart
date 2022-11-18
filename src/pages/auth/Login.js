@@ -16,6 +16,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  
 
   const navigate = useNavigate();
   const previousURL = useSelector(seletctPReviousURL)
@@ -32,11 +33,11 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, email, password )
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
-        console.log("userFromLogin", user);
+        //const user = userCredential.user;
+        //console.log("userFromLogin", user);
         toast.success("login successful...");
         setIsLoading(false);
         redirectUser()

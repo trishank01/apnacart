@@ -58,6 +58,7 @@ const ChangeOrderStatus = ({order , id }) => {
                 </option>
                 <option value="OrderPlace...">OrderPlace...</option>
                 <option value="Processing...">Processing...</option>
+                <option value="Shipped...">Shipped...</option>
                 <option value="Delivered">Delivered</option>
               </select>
             </span>

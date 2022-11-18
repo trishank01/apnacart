@@ -9,7 +9,7 @@ import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 export const firebaseConfig = {
-  apiKey: "AIzaSyDQHdRtWPITr3vEyV83xTygZBpfNuR0Byo",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "apnastore-f4a4e.firebaseapp.com",
   projectId: "apnastore-f4a4e",
   storageBucket: "apnastore-f4a4e.appspot.com",

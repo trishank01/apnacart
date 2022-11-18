@@ -20,7 +20,7 @@ const ProductList = ({ products }) => {
 
   //Pagination states
   const [currentPage , setCurrentPage] = useState(1)
-  const [productsPerPage , setProductsPerPage] = useState(9)
+  const [productsPerPage ] = useState(9)
 
   //Get Current Products
   const indexOfLastProduct = currentPage * productsPerPage
@@ -29,7 +29,7 @@ const ProductList = ({ products }) => {
  
   const currentProducts = filteredProducts.slice(indexOfFirstProduct , indexOfLastProduct)
 
-  console.log(currentProducts)
+
   const dispatch = useDispatch();
   
 
